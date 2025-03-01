@@ -5,9 +5,9 @@ public class Main {
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
-        String score = sc.nextLine();
+        String grade = sc.nextLine();
 
-        switch(score){
+        switch(grade){
             case "A+" :
                 System.out.println("4.3");
                 break;
