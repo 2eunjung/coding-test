@@ -10,6 +10,10 @@ public class Main {
 
         while (cnt-- > 0) {
             // 공백 줄 읽어주기
+            /*
+                테스트케이스마다 맨 처음에 "빈 줄 하나"를 스킵해줘야 합니다. 
+                이게 빠지면 입력 줄이 하나 밀려서 NoSuchElementException이 나는 거예요.
+             */
             br.readLine();
             
             // 행열의 갯수 입력받기
