@@ -24,6 +24,6 @@ public class Main {
                 queue.offer(poll);
             }
         }
-        System.out.println(queue.poll());
+        System.out.println(queue.peek());
     }
 }
