@@ -24,9 +24,6 @@ public class Main {
             /*
                 점화식 코드
                 dp[n] = dp[n -1] + 2 * dp[n-2]
-                dp[n-1] = b
-                dp[n-2] = a
-                => b + 2 * a
              */
             result = (b + 2 * a) % 10007;
             a = b;
