@@ -10,6 +10,7 @@ FROM PATIENT P
     ON P.PT_NO = A.PT_NO
     JOIN DOCTOR D
     ON D.DR_ID = A.MDDR_ID
+    -- 시간을 TRUNC로 잘라서 해당 일자와 비교해야함
 WHERE (TRUNC(A.APNT_YMD) = DATE '2022-04-13'
         AND A.APNT_CNCL_YN = 'N')
     AND A.MCDP_CD = 'CS'
