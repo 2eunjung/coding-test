@@ -1,0 +1,20 @@
+-- 코드를 작성해주세요
+SELECT H.EMP_NO
+    , H.EMP_NAME
+    , CASE
+        WHEN SUM(G.SCORE)/2 >= 96 THEN 'S'
+        WHEN SUM(G.SCORE)/2 >= 90 THEN 'A'
+        WHEN SUM(G.SCORE)/2 >= 80 THEN 'B'
+        ELSE 'C'
+      END AS GRADE
+    , CASE
+        WHEN SUM(G.SCORE)/2 >= 96 THEN H.SAL * 0.2
+        WHEN SUM(G.SCORE)/2 >= 90 THEN H.SAL * 0.15
+        WHEN SUM(G.SCORE)/2 >= 80 THEN H.SAL * 0.1
+        ELSE 0
+      END AS BONUS
+FROM HR_GRADE G
+    JOIN HR_EMPLOYEES H
+    ON G.EMP_NO = H.EMP_NO
+GROUP BY H.EMP_NO, H.EMP_NAME
+ORDER BY EMP_NO;
