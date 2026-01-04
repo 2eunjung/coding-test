@@ -1,0 +1,29 @@
+WITH T AS (
+    SELECT C.CAR_ID
+        , H.HISTORY_ID
+        -- 대여 일수에 맞게 대여 금액을 구해야되기 때문에 데이터 값 추가
+        , TRUNC(H.END_DATE - H.START_DATE) + 1 AS RENTAL_DAYS
+        , CASE
+            -- 대여 시작일과 반납일을 모두 포함해야되기 때문에 +1 추가
+            WHEN TRUNC(H.END_DATE - H.START_DATE) + 1 >= 90 THEN '90일 이상'
+            WHEN TRUNC(H.END_DATE - H.START_DATE) + 1 >= 30 THEN '30일 이상'
+            WHEN TRUNC(H.END_DATE - H.START_DATE) + 1 >= 7 THEN '7일 이상'
+            END AS RENTAL_DATE
+    FROM CAR_RENTAL_COMPANY_CAR C
+        JOIN CAR_RENTAL_COMPANY_RENTAL_HISTORY H
+        ON C.CAR_ID = H.CAR_ID
+)
+
+SELECT T.HISTORY_ID
+    , TRUNC(C.DAILY_FEE 
+            * (100 - NVL(P.DISCOUNT_RATE, 0)) / 100
+            * T.RENTAL_DAYS) 
+            AS FEE
+FROM CAR_RENTAL_COMPANY_CAR C
+    JOIN T T
+    ON C.CAR_ID = T.CAR_ID
+    LEFT JOIN CAR_RENTAL_COMPANY_DISCOUNT_PLAN P
+    ON C.CAR_TYPE = P.CAR_TYPE
+        AND T.RENTAL_DATE = P.DURATION_TYPE
+WHERE C.CAR_TYPE = '트럭' 
+ORDER BY FEE DESC, T.HISTORY_ID DESC
