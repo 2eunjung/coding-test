@@ -15,6 +15,7 @@ WITH T AS (
 )
 
 SELECT T.HISTORY_ID
+    -- NVL(컬럼, 대체값) : 컬럼 값이 NULL이면 대체값으로 바꿔주는 함수
     , TRUNC(C.DAILY_FEE 
             * (100 - NVL(P.DISCOUNT_RATE, 0)) / 100
             * T.RENTAL_DAYS) 
@@ -22,6 +23,7 @@ SELECT T.HISTORY_ID
 FROM CAR_RENTAL_COMPANY_CAR C
     JOIN T T
     ON C.CAR_ID = T.CAR_ID
+    -- 일반 INNER JOIN으로 하면 테이블 값이 조회되지 않기 때문에 NVL이 실행되지 못함
     LEFT JOIN CAR_RENTAL_COMPANY_DISCOUNT_PLAN P
     ON C.CAR_TYPE = P.CAR_TYPE
         AND T.RENTAL_DATE = P.DURATION_TYPE
